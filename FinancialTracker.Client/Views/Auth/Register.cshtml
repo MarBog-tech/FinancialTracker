@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model FinancialTracker.Client.Models.Dto.RegistrationRequestDTO
+
+<form method="post">
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="card p-4 shadow-lg" style="max-width: 500px; width: 100%; height: auto;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Register</h2>
+                
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Username</label>
+                    <input asp-for="UserName" id="userName" type="text" class="form-control" placeholder="Enter your username" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input asp-for="Email" id="email" type="email" class="form-control" placeholder="Enter your email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input asp-for="Password" id="password" type="password" class="form-control" placeholder="Enter your password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select asp-for="Role" id="role" class="form-select" asp-items="@ViewBag.RoleList">
+                        <option disabled selected>--Select Role--</option>
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
