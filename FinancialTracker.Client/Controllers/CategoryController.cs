@@ -1,10 +1,12 @@
 ﻿using FinancialTracker.Client.Models.Entity;
 using FinancialTracker.Client.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace FinancialTracker.Client.Controllers;
 
+[Authorize]
 public class CategoryController : Controller
 {
     private readonly ICategoryService _categoryService;

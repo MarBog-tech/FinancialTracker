@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FinancialTracker.Client.Razor.Models.Entity;
+namespace FinancialTracker.Server.Models.Dto;
 
 public class TransactionDTO
 {

@@ -28,8 +28,13 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Category" asp-action="IndexCategory">Category</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="IndexCategory">Category</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -37,10 +42,10 @@
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle"></i> Hello, @User.Identity.Name
+                                <i class="bi bi-person-circle"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                @* <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index">Profile</a></li> *@
+                                <li><a class="dropdown-item" asp-controller="Auth" asp-action="EditProfile">Profile</a></li>
                                 <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Logout</a></li>
                             </ul>
                         </li>
@@ -48,7 +53,7 @@
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
+                            <a class="nav-link" asp-controller="Auth" asp-action="Login">Sign in</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>

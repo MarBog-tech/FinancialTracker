@@ -8,5 +8,6 @@ public interface IUserRepository
     Task<UserDTO> Register(RegistrationRequestDTO registrationRequestDto);
     Task<TokenDTO> RefreshAccessToken(TokenDTO tokenDTO);
     Task RevokeRefreshToken(TokenDTO tokenDTO);
+    Task<UserProfileDTO?> GetUserProfile(Guid userId);
     Task<UserProfileDTO> UpdateUserProfile(Guid userId, UserProfileDTO userProfileDto);
 }

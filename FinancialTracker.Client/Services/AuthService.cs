@@ -47,4 +47,23 @@ public class AuthService : IAuthService
             Url = _url + $"/api/UsersAuth/revoke"
         });
     }
+    
+    public async Task<T> GetProfileAsync<T>(Guid userId)
+    {
+        return await _baseService.SendAsync<T>(new APIRequest()
+        {
+            ApiType = SD.ApiType.GET,
+            Url = _url + $"/api/UsersAuth/{userId}"
+        });
+    }
+
+    public async Task<T> UpdateProfileAsync<T>(Guid userId, UserProfileDTO userProfileDto)
+    {
+        return await _baseService.SendAsync<T>(new APIRequest()
+        {
+            ApiType = SD.ApiType.PUT,
+            Data = userProfileDto,
+            Url = _url + $"/api/UsersAuth/UpdateProfile/" + userId
+        });
+    }
 }

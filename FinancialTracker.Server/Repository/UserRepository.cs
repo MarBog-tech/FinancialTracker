@@ -206,6 +206,14 @@ public class UserRepository: IUserRepository
         return isValid;
     }
     
+    public async Task<UserProfileDTO?> GetUserProfile(Guid userId)
+    {
+        var userProfile = await _db.UserProfile.FirstOrDefaultAsync(u => u.Id == userId);
+        if (userProfile == null) return null;
+        var profile = _mapper.Map<UserProfileDTO>(userProfile);
+        return profile;
+    }
+    
     public async Task<UserProfileDTO> UpdateUserProfile(Guid userId, UserProfileDTO userProfileDto)
     {
         var userProfile = await _db.UserProfile.FindAsync(userId);

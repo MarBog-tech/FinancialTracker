@@ -117,6 +117,28 @@ public class UsersController : ControllerBase
         });    
     }
     
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetUserProfile(Guid id)
+    {
+        var userProfile = await _userRepo.GetUserProfile(id);
+        if (userProfile == null)
+        {
+            return NotFound(new APIResponse
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                IsSuccess = false,
+                ErrorMessages = new List<string> { "User profile not found." }
+            });
+        }
+    
+        return Ok(new APIResponse
+        {
+            StatusCode = HttpStatusCode.OK,
+            IsSuccess = true,
+            Result = userProfile
+        });
+    }
+    
     [HttpPut("UpdateProfile/{id:guid}", Name ="UpdateProfile")]
     public async Task<IActionResult> UpdateUserProfile(Guid id, [FromBody] UserProfileDTO model)
     {

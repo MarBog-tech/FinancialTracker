@@ -10,5 +10,6 @@ public class MappingConfig : Profile
     {
 
         CreateMap<User, UserDTO>().ReverseMap();
+        CreateMap<UserProfileDTO, UserProfile>().ReverseMap();
     }
 }
