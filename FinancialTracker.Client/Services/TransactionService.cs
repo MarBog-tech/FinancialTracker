@@ -1,4 +1,5 @@
-﻿using FinancialTracker.Client.Models.Entity;
+﻿using FinancialTracker.Client.Models.Dto;
+using FinancialTracker.Client.Models.Entity;
 using FinancialTracker.Client.Models.Utility;
 using FinancialTracker.Client.Services.IServices;
 
@@ -23,7 +24,15 @@ public class TransactionService: ITransactionService
             Url = _url + "/Api/TransactionAPI"
         });
     }
-
+    
+    public async Task<T> GetAllByUserAsync<T>(Guid userId)
+    {
+        return await _baseService.SendAsync<T>(new APIRequest()
+        {
+            ApiType = SD.ApiType.GET,
+            Url = _url + "/Api/TransactionAPI/User/" + userId
+        });
+    }
     public async Task<T> GetAsync<T>(Guid id)
     {
         return await _baseService.SendAsync<T>(new APIRequest()

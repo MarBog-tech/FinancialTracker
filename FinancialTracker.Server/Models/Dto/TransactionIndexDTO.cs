@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace FinancialTracker.Client.Models.Dto;
+namespace FinancialTracker.Server.Models.Dto;
 
-public class TransactionDTO
+public class TransactionIndexDTO
 {
     public Guid Id { get; set; }
     [Required]
@@ -16,4 +16,6 @@ public class TransactionDTO
     public Guid UserId { get; set; }
     [Required]
     public Guid CategoryId { get; set; }
+    [ValidateNever]
+    public string Category { get; set; }
 }

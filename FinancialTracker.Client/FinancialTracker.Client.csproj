@@ -22,6 +22,7 @@
       <_ContentIncludedByDefault Remove="Pages\Category\CreateCategory.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Category\IndexCategory.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Category\UpdateCategory.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Transaction\Index.cshtml" />
     </ItemGroup>
 
 </Project>

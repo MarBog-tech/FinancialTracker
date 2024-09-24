@@ -36,7 +36,7 @@ public class UserRepository: IUserRepository
     public async Task<TokenDTO> Login(LoginRequestDTO login)
     {
         var user = await _userManager.FindByEmailAsync(login.Email);
-        if (user == null || await _userManager.CheckPasswordAsync(user, login.Password))
+        if (user == null || !await _userManager.CheckPasswordAsync(user, login.Password))
             throw new InvalidOperationException("Email or password is incorrect"); ;
             
         

@@ -11,5 +11,10 @@ public class MappingConfig : Profile
 
         CreateMap<User, UserDTO>().ReverseMap();
         CreateMap<UserProfileDTO, UserProfile>().ReverseMap();
+        CreateMap<Transaction, TransactionIndexDTO>()
+            .ForMember(dest=> dest.Category, 
+                opt=> opt.MapFrom(
+                    src=>src.Category.Name));
+        CreateMap<TransactionDTO, Transaction>().ReverseMap();
     }
 }

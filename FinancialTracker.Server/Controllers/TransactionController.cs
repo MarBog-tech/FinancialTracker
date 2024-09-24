@@ -1,5 +1,7 @@
 ﻿using System.Net;
+using AutoMapper;
 using FinancialTracker.Server.Models;
+using FinancialTracker.Server.Models.Dto;
 using FinancialTracker.Server.Models.Entity;
 using FinancialTracker.Server.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +13,12 @@ namespace FinancialTracker.Server.Controllers;
 public class TransactionController : ControllerBase
 {
     private readonly ITransactionRepository _transactionRepo;
+    private readonly IMapper _mapper;
 
-    public TransactionController(ITransactionRepository transactionRepo)
+    public TransactionController(ITransactionRepository transactionRepo, IMapper mapper)
     {
         _transactionRepo = transactionRepo;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -37,7 +41,7 @@ public class TransactionController : ControllerBase
             {
                 StatusCode = HttpStatusCode.OK,
                 IsSuccess = true,
-                Result = transactions
+                Result = _mapper.Map<IEnumerable<TransactionDTO>>(transactions)
             });
         }
         catch (Exception ex)
@@ -56,7 +60,7 @@ public class TransactionController : ControllerBase
     {
         try
         {
-            var transactions = await _transactionRepo.GetAll(t => t.UserId == userId);
+            var transactions = await _transactionRepo.GetAll(t => t.UserId == userId, includeProperties:"Category");
             if (transactions == null || !transactions.Any())
             {
                 return StatusCode(StatusCodes.Status404NotFound, new APIResponse
@@ -71,7 +75,7 @@ public class TransactionController : ControllerBase
             {
                 StatusCode = HttpStatusCode.OK,
                 IsSuccess = true,
-                Result = transactions
+                Result = _mapper.Map<IEnumerable<TransactionIndexDTO>>(transactions)
             });
         }
         catch (Exception ex)
@@ -105,7 +109,7 @@ public class TransactionController : ControllerBase
             {
                 StatusCode = HttpStatusCode.OK,
                 IsSuccess = true,
-                Result = transaction
+                Result = _mapper.Map<TransactionDTO>(transaction)
             });
         }
         catch (Exception ex)
@@ -120,7 +124,7 @@ public class TransactionController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateTransaction([FromBody] Transaction transaction)
+    public async Task<ActionResult> CreateTransaction([FromBody] TransactionDTO transaction)
     {
         try
         {
@@ -134,7 +138,9 @@ public class TransactionController : ControllerBase
                 });
             }
 
-            await _transactionRepo.Create(transaction);
+            transaction.Date = DateTime.Now;
+            
+            await _transactionRepo.Create(_mapper.Map<Transaction>(transaction));
             await _transactionRepo.SaveAsync();
 
             return StatusCode(StatusCodes.Status201Created, new APIResponse
@@ -191,7 +197,7 @@ public class TransactionController : ControllerBase
     }
 
     [HttpPut("{id:guid}", Name = "UpdateTransaction")]
-    public async Task<ActionResult> UpdateTransaction(Guid id, [FromBody] Transaction transaction)
+    public async Task<ActionResult> UpdateTransaction(Guid id, [FromBody] TransactionDTO transaction)
     {
         try
         {
@@ -205,7 +211,7 @@ public class TransactionController : ControllerBase
                 });
             }
 
-            _transactionRepo.Update(transaction);
+            _transactionRepo.Update(_mapper.Map<Transaction>(transaction));
             await _transactionRepo.SaveAsync();
 
             return StatusCode(StatusCodes.Status200OK, new APIResponse
