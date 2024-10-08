@@ -60,7 +60,6 @@ public class UserRepository: IUserRepository
             Email=registration.Email
         };
         
-        //При створенні користувача не враховує спец символи у паролі
         var result = await _userManager.CreateAsync(user, registration.Password);
         if (!result.Succeeded) 
             throw new InvalidOperationException($"Failed to create user: {string.Join(", ", result.Errors.Select(e => e.Description))}");

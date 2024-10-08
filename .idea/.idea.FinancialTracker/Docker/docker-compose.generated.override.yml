@@ -1,0 +1,40 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  client:
+    build:
+      context: "D:\\Projects\\RiderProjects\\FinancialTracker\\FinancialTracker.Client"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/FinancialTracker.Client.dll"
+    environment:
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/FinancialTracker.Client.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "financialtracker.client:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\march\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\Projects\\RiderProjects\\FinancialTracker\\FinancialTracker.Client:/app:rw"
+    - "D:\\Projects\\RiderProjects\\FinancialTracker:/src:rw"
+    working_dir: "/app"
+  webapi:
+    build:
+      context: "D:\\Projects\\RiderProjects\\FinancialTracker\\FinancialTracker.Server"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/FinancialTracker.Server.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "financialtracker.server:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\march\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\Projects\\RiderProjects\\FinancialTracker\\FinancialTracker.Server:/app:rw"
+    - "D:\\Projects\\RiderProjects\\FinancialTracker:/src:rw"
+    working_dir: "/app"

@@ -12,7 +12,7 @@ public class CategoryService: ICategoryService
     public CategoryService(IConfiguration configuration, IBaseService baseService)
     {
         _baseService = baseService;
-        _url = configuration.GetValue<string>("ServiceUrls:API");
+        _url = configuration["backend_url"] ?? configuration.GetValue<string>("ServiceUrls:API");
     }
 
     public async Task<T> GetAllAsync<T>()

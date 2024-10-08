@@ -16,9 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-
+// var connectionString = builder.Configuration.GetConnectionString("DefaultSQLConnection");
+var server = builder.Configuration["server"] ?? "localhost";
+var port = builder.Configuration["port"] ?? "1433";
+var db = builder.Configuration["database"] ?? "FinancialTracker";
+var password = builder.Configuration["password"] ?? "StrongPassword123!";
+var user = builder.Configuration["dbuser"] ?? "sa";
+var connectionString = $"Server={server}, {port};Initial Catalog={db};User ID={user};Password={password};TrustServerCertificate=True";
 builder.Services.AddDbContext<ApplicationDbContext>(option => {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+    option.UseSqlServer(connectionString);
 });
 
 builder.Services.AddAuthorization();
@@ -67,7 +73,7 @@ void ApplyMigration()
     {
         var _db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        if (_db.Database.GetPendingMigrations().Count() > 0)
+        if (_db.Database.GetPendingMigrations().Any())
         {
             _db.Database.Migrate();
         }

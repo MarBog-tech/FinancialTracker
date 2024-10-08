@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace FinancialTracker.Client.Controllers;
 
-[Authorize]
+// [Authorize]
 public class CategoryController : Controller
 {
     private readonly ICategoryService _categoryService;

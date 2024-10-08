@@ -1,0 +1,52 @@
+﻿version: '3.8'
+
+services:
+  client:
+    container_name: aspnetcore-mvc
+    environment:
+      backend_url: "http://aspnetcore-webapi:8080"
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "8081:8080"
+    build:
+      context: /FinancialTracker.Client
+      dockerfile: Dockerfile
+    depends_on:
+      - webapi
+    restart: always
+  
+  webapi:
+    container_name: aspnetcore-webapi
+    environment:
+      server: "sqlserver"
+      port: "1433"
+      database: "FinancialTracker"
+      password: "StrongPassword123!"
+      dbuser: "SA"
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "8080:8080"
+    build:
+      context: /FinancialTracker.Server
+      dockerfile: Dockerfile
+    depends_on:
+      - sqlserver
+    restart: always
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "StrongPassword123!"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P StrongPassword123! -Q 'SELECT 1'" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mssql_data:

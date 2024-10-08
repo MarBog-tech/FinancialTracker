@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace FinancialTracker.Client.Controllers
-{
-        [Authorize]
+{ 
+    [Authorize]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;

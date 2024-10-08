@@ -28,7 +28,7 @@ public class BaseService : IBaseService
             _tokenProvider = tokenProvider;
             _httpContextAccessor = httpContextAccessor;
             _apiMessageRequestBuilder = apiMessageRequestBuilder;
-            ApiUrl = configuration.GetValue<string>("ServiceUrls:API");
+            ApiUrl = configuration["backend_url"] ?? configuration.GetValue<string>("ServiceUrls:API");
         }
         public string ApiUrl { get; }
         

@@ -14,7 +14,7 @@ public class AuthService : IAuthService
     {
         _baseService = baseService;
         _clientFactory = clientFactory;
-        _url = configuration.GetValue<string>("ServiceUrls:API");
+        _url = configuration["backend_url"] ?? configuration.GetValue<string>("ServiceUrls:API");
 
     }
 
@@ -24,7 +24,7 @@ public class AuthService : IAuthService
         {
             ApiType = SD.ApiType.POST,
             Data = obj,
-            Url = _url + $"/api/UsersAuth/login"
+            Url = _url + "/api/UsersAuth/login"
         },withBearer:false);
     }
 
@@ -34,7 +34,7 @@ public class AuthService : IAuthService
         {
             ApiType = SD.ApiType.POST,
             Data = obj,
-            Url = _url + $"/api/UsersAuth/register"
+            Url = _url +"/api/UsersAuth/register"
         }, withBearer: false);
     }
 
@@ -44,7 +44,7 @@ public class AuthService : IAuthService
         {
             ApiType = SD.ApiType.POST,
             Data = obj,
-            Url = _url + $"/api/UsersAuth/revoke"
+            Url = _url + "/api/UsersAuth/revoke"
         });
     }
     
@@ -63,7 +63,7 @@ public class AuthService : IAuthService
         {
             ApiType = SD.ApiType.PUT,
             Data = userProfileDto,
-            Url = _url + $"/api/UsersAuth/UpdateProfile/" + userId
+            Url = _url + $"/api/UsersAuth/UpdateProfile/{userId}"
         });
     }
 }
